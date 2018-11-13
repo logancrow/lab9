@@ -445,6 +445,11 @@
               <FileType>1</FileType>
               <FilePath>.\fixed.c</FilePath>
             </File>
+            <File>
+              <FileName>graphics.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\graphics.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

@@ -34,6 +34,7 @@
 #include "calibrate.h"
 #include "fixed.h"
 #include <stdio.h>
+#include "graphics.h"
 
 void DisableInterrupts(void); // Disable interrupts
 void EnableInterrupts(void);  // Enable interrupts
@@ -74,12 +75,7 @@ int main(void){
 			char* ADCString;
 			sprintf(ADCString,"%d",ADCIn);
 			ready = 0;
-			ST7735_FillScreen(ST7735_BLACK); 
-			ST7735_SetCursor(0,0);
-			ST7735_OutString("Temperature: ");
-			ST7735_sDecOut2(temp);
-			ST7735_OutString("\nADC Value: ");
-			ST7735_OutString(ADCString);		
+			Graphics_Init(temp, ADCString);
 		}
 		//uncomment for procedure 1
 		/*if(count == 99){
