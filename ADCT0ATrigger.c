@@ -71,7 +71,7 @@ void EndCritical(long sr);    // restore I bit to previous value
 void WaitForInterrupt(void);  // low power mode
 
 uint32_t dump[100];
-uint8_t count;
+uint8_t count = 0;
 uint8_t ready;
 
 // There are many choices to make when using the ADC, and many
@@ -265,12 +265,15 @@ void ADC0_InitTimer0ATriggerSeq3PD3(uint32_t period){
 volatile uint32_t ADCvalue;
 uint32_t ADCIn;
 void ADC0Seq3_Handler(void){
+	GPIO_PORTF_DATA_R ^= 0x04;
   ADC0_ISC_R = 0x08;          // acknowledge ADC sequence 3 completion
   ADCvalue = ADC0_SSFIFO3_R;  // 12-bit result
 	ADCIn = ADCvalue;
 	ready = 1;
-	while(count < 100){
+	if(count < 100){
 		dump[count] = ADCvalue;
 		count++;
 	}
+	GPIO_PORTF_DATA_R ^= 0x04;
+	GPIO_PORTF_DATA_R ^= 0x04;
 }

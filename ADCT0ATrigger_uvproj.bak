@@ -435,16 +435,6 @@
               <FileType>1</FileType>
               <FilePath>.\UART.c</FilePath>
             </File>
-            <File>
-              <FileName>calibrate.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\calibrate.c</FilePath>
-            </File>
-            <File>
-              <FileName>fixed.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\fixed.c</FilePath>
-            </File>
           </Files>
         </Group>
       </Groups>

@@ -6,6 +6,7 @@
 
 #include <stdint.h>
 #include "calibrate.h"
+#include <math.h>
 
 /****************calibrate***************
  Converts ADC value from 0 to 4096 to Celcius temperature 
@@ -14,6 +15,6 @@
  Outputs: Temperature at resolution .01
  */ 
 uint32_t calibrate(uint32_t ADC_In){
-	uint32_t converted = ADC_In;
+	uint32_t converted = 3951 - ((5*ADC_In*ADC_In)/10000) - ((ADC_In*4053)/10000);
 	return converted;
 }

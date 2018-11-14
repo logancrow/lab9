@@ -34,7 +34,6 @@
 #include "calibrate.h"
 #include "fixed.h"
 #include <stdio.h>
-#include "graphics.h"
 
 void DisableInterrupts(void); // Disable interrupts
 void EnableInterrupts(void);  // Enable interrupts
@@ -44,6 +43,7 @@ void WaitForInterrupt(void);  // low power mode
 
 
 void PortF_Init(){
+	SYSCTL_RCGCGPIO_R |= 0x00000020;         // activate port F
 	GPIO_PORTF_DIR_R |= 0x04;                // make PF2 out (built-in LED)
   GPIO_PORTF_AFSEL_R &= ~0x04;             // disable alt funct on PF2
   GPIO_PORTF_DEN_R |= 0x04;                // enable digital I/O on PF2
@@ -62,26 +62,38 @@ void PortF_Init(){
 
 int main(void){
   PLL_Init(Bus80MHz);                      // 80 MHz system clock
-  SYSCTL_RCGCGPIO_R |= 0x00000020;         // activate port F
+	PortF_Init();
 	//Uncomment for procedure 1
   //ADC0_InitTimer0ATriggerSeq3(0, 80000);   // ADC channel 0, 1000 Hz sampling
 	ADC0_InitTimer0ATriggerSeq3(0, 800000);    // ADC channel 0, 100 Hz sampling
 	UART_Init();
 	ST7735_InitR(INITR_REDTAB);
   EnableInterrupts();
+	ST7735_FillScreen(ST7735_BLACK);
+	ST7735_SetCursor(0,0);
+	ST7735_OutString("Temperature: \n");	
   while(1){
 		if(ready){
 			uint32_t temp = calibrate(ADCIn);
 			char* ADCString;
 			sprintf(ADCString,"%d",ADCIn);
 			ready = 0;
-			Graphics_Init(temp, ADCString);
-		}
+			//ST7735_FillScreen(ST7735_BLACK); 
+			ST7735_SetCursor(0,1);
+			//ST7735_OutString("Temperature: \n");
+			ST7735_sDecOut2(temp);
+			
+			//ST7735_SetCursor(1,0);
+			//ST7735_OutString(ADCString);		
+		} 
 		//uncomment for procedure 1
-		/*if(count == 99){
+		/*if(count == 100){
+			UART_OutString("\n\rAlias");
 			for(int i = 0;i < 100;i++){ 
+				UART_OutString("\n\r");
 				UART_OutUDec(dump[i]); 
-			} 
+			}
+			count++;
 		} */
   }
 }
