@@ -16,7 +16,7 @@ void Graphics_Init(uint32_t temp, char* ADCString);
 void Graphics_WriteTemp(uint32_t temp);
 
 //plot the temperature readings
-void Graphics_PlotInit();
+void Graphics_PlotInit(void);
 
 //plots one point in the graph
 //overrides current point in graph to plot new values

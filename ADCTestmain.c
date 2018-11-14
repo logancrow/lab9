@@ -29,6 +29,7 @@
 #include "../inc/tm4c123gh6pm.h"
 #include "ADCT0ATrigger.h"
 #include "PLL.h"
+#include "graphics.h"
 #include "UART.h"
 #include "ST7735.h"
 #include "calibrate.h"
@@ -40,7 +41,7 @@ void EnableInterrupts(void);  // Enable interrupts
 long StartCritical (void);    // previous I bit, disable interrupts
 void EndCritical(long sr);    // restore I bit to previous value
 void WaitForInterrupt(void);  // low power mode
-
+void Graphics_Init(uint32_t temp, char* ADCString);
 
 void PortF_Init(){
 	SYSCTL_RCGCGPIO_R |= 0x00000020;         // activate port F
@@ -69,26 +70,16 @@ int main(void){
 	UART_Init();
 	ST7735_InitR(INITR_REDTAB);
   EnableInterrupts();
-	ST7735_FillScreen(ST7735_BLACK);
-	ST7735_SetCursor(0,0);
-	ST7735_OutString("Temperature: \n");	
+	Graphics_PlotInit();
   while(1){
 		if(ready){
 			uint32_t temp = calibrate(ADCIn);
-			char* ADCString;
-			sprintf(ADCString,"%d",ADCIn);
 			ready = 0;
-			//ST7735_FillScreen(ST7735_BLACK); 
-			ST7735_SetCursor(0,1);
-			//ST7735_OutString("Temperature: \n");
-			ST7735_sDecOut2(temp);
-			
-			//ST7735_SetCursor(1,0);
-			//ST7735_OutString(ADCString);		
+			Graphics_PlotPoint(temp, ADCIn);		
 		} 
 		//uncomment for procedure 1
 		/*if(count == 100){
-			UART_OutString("\n\rAlias");
+			UART_OutString("\n\rAlias");v
 			for(int i = 0;i < 100;i++){ 
 				UART_OutString("\n\r");
 				UART_OutUDec(dump[i]); 

@@ -2,3 +2,4 @@
 .\adct0atrigger.o: C:\Keil\ARM\ARMCC\bin\..\include\stdint.h
 .\adct0atrigger.o: ../inc/tm4c123gh6pm.h
 .\adct0atrigger.o: ADCT0ATrigger.h
+.\adct0atrigger.o: graphics.h

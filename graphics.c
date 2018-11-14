@@ -4,6 +4,7 @@
 //Date Created: 11/10/2018
 //Last Modified: 11/13/2018
 
+#include "graphics.h"
 #include <stdint.h>
 #include <stdio.h>
 #include "ST7735.h"
@@ -28,7 +29,8 @@ void Graphics_WriteTemp(uint32_t temp) {
 	ST7735_sDecOut2(temp);
 }
 
-void Graphics_PlotInit() {
+void Graphics_PlotInit(void) {
+	ST7735_FillScreen(ST7735_BLACK);
 	ST7735_SetCursor(0,0);
 	ST7735_OutString("Lab 9");
 	ST7735_PlotClear(1000,4000);
@@ -48,8 +50,8 @@ void Graphics_PlotPoint(uint32_t temp, uint32_t data) {
 	if ((j%fs)==0) {
 		ST7735_SetCursor(3,1);
 		ST7735_OutUDec(data);
-		ST7735_SetCursor(3,2);
-		ST7735_sDecOut2(temp/10);
+		ST7735_SetCursor(2,2);
+		ST7735_sDecOut2(temp);
 	}
 	j++;
 }

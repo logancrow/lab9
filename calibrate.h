@@ -4,6 +4,7 @@
 //Date Created: 11/12/2018
 //Last Modified: 11/12/2018
 
+#include <stdint.h>
 
 /****************calibrate***************
  Converts ADC value from 0 to 4096 to Celcius temperature 

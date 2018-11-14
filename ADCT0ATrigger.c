@@ -24,6 +24,8 @@
 #include <stdint.h>
 #include "../inc/tm4c123gh6pm.h"
 #include "ADCT0ATrigger.h"
+#include "graphics.h"
+
 #define NVIC_EN0_INT17          0x00020000  // Interrupt 17 enable
 
 #define TIMER_CFG_16_BIT        0x00000004  // 16-bit timer configuration,
